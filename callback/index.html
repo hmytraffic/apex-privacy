@@ -1,10 +1,15 @@
- <!DOCTYPE html>
+  <!DOCTYPE html>                                                                                                                       
   <html>
   <head><title>Redirecting...</title></head>
   <body>
   <p>Redirecting to Apex...</p>
   <script>
-    window.location.href = 'apex://whoop/callback' + window.location.search;
+    // Try native deep link first, fallback to Expo Go
+    var params = window.location.search;
+    window.location.href = 'apex://whoop/callback' + params;
+    setTimeout(function() {
+      window.location.href = 'exp://whoop/callback' + params;
+    }, 500);
   </script>
   </body>
   </html>
