@@ -1,0 +1,551 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Chama — AI Fitness Coach</title>
+  <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+      background: #F7F7F5;
+      color: #374151;
+      line-height: 1.6;
+    }
+    a { color: #F06000; text-decoration: none; }
+    a:hover { text-decoration: underline; }
+
+    /* ─── Nav ─── */
+    .nav {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      max-width: 960px;
+      margin: 0 auto;
+      padding: 20px 24px;
+    }
+    .nav-brand {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      font-size: 22px;
+      font-weight: 800;
+      color: #0A0C10;
+      letter-spacing: 3px;
+      text-transform: uppercase;
+      text-decoration: none;
+    }
+    .nav-links { display: flex; gap: 24px; }
+    .nav-links a { font-size: 14px; font-weight: 600; color: #6B7280; }
+    .nav-links a:hover { color: #0A0C10; text-decoration: none; }
+
+    /* ─── Hero ─── */
+    .hero {
+      text-align: center;
+      padding: 80px 24px 60px;
+      max-width: 720px;
+      margin: 0 auto;
+    }
+    .hero h1 {
+      font-size: 48px;
+      font-weight: 800;
+      color: #0A0C10;
+      line-height: 1.1;
+      letter-spacing: -1px;
+      margin-bottom: 16px;
+    }
+    .hero h1 span { color: #F06000; }
+    .hero p {
+      font-size: 18px;
+      color: #6B7280;
+      max-width: 500px;
+      margin: 0 auto 32px;
+    }
+    .hero-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      background: #0A0C10;
+      color: #fff;
+      font-size: 14px;
+      font-weight: 600;
+      padding: 12px 28px;
+      border-radius: 100px;
+    }
+
+    /* ─── Features grid ─── */
+    .features {
+      max-width: 960px;
+      margin: 0 auto;
+      padding: 40px 24px 80px;
+    }
+    .features-title {
+      text-align: center;
+      font-size: 14px;
+      font-weight: 700;
+      color: #F06000;
+      letter-spacing: 2px;
+      text-transform: uppercase;
+      margin-bottom: 12px;
+    }
+    .features-heading {
+      text-align: center;
+      font-size: 32px;
+      font-weight: 800;
+      color: #0A0C10;
+      margin-bottom: 48px;
+    }
+    .grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+      gap: 24px;
+    }
+    .card {
+      background: #FFFFFF;
+      border: 1px solid #E5E7EB;
+      border-radius: 16px;
+      padding: 32px 28px;
+    }
+    .card-icon {
+      width: 48px;
+      height: 48px;
+      border-radius: 12px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 24px;
+      margin-bottom: 16px;
+    }
+    .card h3 {
+      font-size: 18px;
+      font-weight: 700;
+      color: #0A0C10;
+      margin-bottom: 8px;
+    }
+    .card p {
+      font-size: 15px;
+      color: #6B7280;
+      line-height: 1.6;
+    }
+
+    /* ─── App Screens ─── */
+    .screens {
+      max-width: 960px;
+      margin: 0 auto;
+      padding: 80px 24px;
+    }
+    .screen-row {
+      display: flex;
+      align-items: center;
+      gap: 48px;
+      margin-bottom: 64px;
+    }
+    .screen-row.reverse { flex-direction: row-reverse; }
+    .screen-img {
+      flex: 0 0 280px;
+    }
+    .screen-img img {
+      width: 100%;
+      border-radius: 24px;
+      box-shadow: 0 8px 32px rgba(0,0,0,0.08);
+    }
+    .screen-text { flex: 1; }
+    .screen-badge {
+      display: inline-block;
+      font-size: 12px;
+      font-weight: 700;
+      letter-spacing: 1px;
+      text-transform: uppercase;
+      padding: 4px 14px;
+      border-radius: 100px;
+      margin-bottom: 12px;
+    }
+    .screen-text h3 {
+      font-size: 26px;
+      font-weight: 800;
+      color: #0A0C10;
+      margin-bottom: 12px;
+      line-height: 1.2;
+    }
+    .screen-text p {
+      font-size: 16px;
+      color: #6B7280;
+      line-height: 1.7;
+    }
+    @media (max-width: 640px) {
+      .screen-row, .screen-row.reverse { flex-direction: column; gap: 24px; }
+      .screen-img { flex: 0 0 auto; max-width: 240px; }
+      .screen-text h3 { font-size: 22px; }
+    }
+
+    /* ─── Sports strip ─── */
+    .sports {
+      background: #0A0C10;
+      padding: 48px 24px;
+      text-align: center;
+    }
+    .sports h2 {
+      font-size: 28px;
+      font-weight: 800;
+      color: #FFFFFF;
+      margin-bottom: 24px;
+    }
+    .sports-grid {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: center;
+      gap: 12px;
+      max-width: 600px;
+      margin: 0 auto;
+    }
+    .sport-chip {
+      background: rgba(255,255,255,0.08);
+      border: 1px solid rgba(255,255,255,0.15);
+      color: #E0E0E6;
+      font-size: 14px;
+      font-weight: 600;
+      padding: 8px 20px;
+      border-radius: 100px;
+    }
+
+    /* ─── How it works ─── */
+    .how {
+      max-width: 720px;
+      margin: 0 auto;
+      padding: 80px 24px;
+    }
+    .how h2 {
+      text-align: center;
+      font-size: 32px;
+      font-weight: 800;
+      color: #0A0C10;
+      margin-bottom: 48px;
+    }
+    .steps {
+      display: flex;
+      flex-direction: column;
+      gap: 32px;
+    }
+    .step {
+      display: flex;
+      gap: 20px;
+      align-items: flex-start;
+    }
+    .step-num {
+      width: 40px;
+      height: 40px;
+      border-radius: 12px;
+      background: #F06000;
+      color: #fff;
+      font-size: 18px;
+      font-weight: 800;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-shrink: 0;
+    }
+    .step h3 {
+      font-size: 17px;
+      font-weight: 700;
+      color: #0A0C10;
+      margin-bottom: 4px;
+    }
+    .step p { font-size: 15px; color: #6B7280; }
+
+    /* ─── Support ─── */
+    .support {
+      background: #FFFFFF;
+      border-top: 1px solid #E5E7EB;
+      padding: 64px 24px;
+      text-align: center;
+    }
+    .support h2 {
+      font-size: 28px;
+      font-weight: 800;
+      color: #0A0C10;
+      margin-bottom: 12px;
+    }
+    .support p {
+      font-size: 16px;
+      color: #6B7280;
+      margin-bottom: 24px;
+    }
+    .support-email {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      background: #0A0C10;
+      color: #fff;
+      font-size: 15px;
+      font-weight: 600;
+      padding: 14px 32px;
+      border-radius: 100px;
+      text-decoration: none;
+    }
+    .support-email:hover { opacity: 0.9; text-decoration: none; }
+    .support-links {
+      margin-top: 24px;
+      display: flex;
+      justify-content: center;
+      gap: 24px;
+    }
+    .support-links a { font-size: 13px; color: #9CA3AF; font-weight: 500; }
+
+    /* ─── Footer ─── */
+    .footer {
+      padding: 32px 24px;
+      text-align: center;
+      font-size: 12px;
+      color: #9CA3AF;
+    }
+
+    @media (max-width: 640px) {
+      .hero h1 { font-size: 32px; }
+      .features-heading { font-size: 24px; }
+      .how h2 { font-size: 24px; }
+      .nav-links { display: none; }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Nav -->
+  <nav class="nav">
+    <a href="#" class="nav-brand">
+      <svg width="24" height="24" viewBox="0 0 512 512" fill="none">
+        <rect x="2" y="2" width="508" height="508" rx="112" fill="none" stroke="#E6E8EC" stroke-width="1"/>
+        <polygon points="55,420 155,260 195,330 265,170 305,260 370,90 470,400" fill="#F06000"/>
+      </svg>
+      CHAMA
+    </a>
+    <div class="nav-links">
+      <a href="#features">Features</a>
+      <a href="#how">How it works</a>
+      <a href="#support">Support</a>
+    </div>
+  </nav>
+
+  <!-- Hero -->
+  <section class="hero">
+    <h1>Not an app.<br><span>A coach.</span></h1>
+    <p>AI-powered training plans, smart nutrition, real-time coaching. Built for runners, Hyrox athletes, and anyone serious about fitness.</p>
+    <div class="hero-badge">Available on iOS</div>
+  </section>
+
+  <!-- Features -->
+  <section class="features" id="features">
+    <p class="features-title">Features</p>
+    <h2 class="features-heading">Everything you need to train smarter.</h2>
+    <div class="grid">
+      <div class="card">
+        <div class="card-icon" style="background: #FFF7ED;">🤖</div>
+        <h3>AI Coach Kai</h3>
+        <p>Chat with your AI coach anytime. Ask about training, nutrition, recovery, or modifications. Kai adapts to your level and goals.</p>
+      </div>
+      <div class="card">
+        <div class="card-icon" style="background: #EFF6FF;">📋</div>
+        <h3>Personalized Plans</h3>
+        <p>Complete training programs with periodization, warm-up, main work, cooldown. Every session calibrated to your fitness level.</p>
+      </div>
+      <div class="card">
+        <div class="card-icon" style="background: #F0FDF4;">🎙️</div>
+        <h3>Daily Briefing</h3>
+        <p>Every morning, Kai briefs you on today's session — with audio. Weather, coaching tips, and nutrition included.</p>
+      </div>
+      <div class="card">
+        <div class="card-icon" style="background: #FEF3F2;">⌚</div>
+        <h3>Wearable Integration</h3>
+        <p>Connect Apple Watch or Whoop. Kai reads your recovery, heart rate, and sleep to adapt your sessions in real-time.</p>
+      </div>
+      <div class="card">
+        <div class="card-icon" style="background: #F5F3FF;">🍽️</div>
+        <h3>Smart Nutrition</h3>
+        <p>Pre, during, and post-workout nutrition adapted to your session type, intensity, and personal preferences.</p>
+      </div>
+      <div class="card">
+        <div class="card-icon" style="background: #FFF7ED;">📊</div>
+        <h3>Performance Reports</h3>
+        <p>AI-powered workout debriefs with heart rate analysis, effort breakdown, and recovery recommendations.</p>
+      </div>
+      <div class="card">
+        <div class="card-icon" style="background: #EFF6FF;">🧠</div>
+        <h3>Conditioning Check-in</h3>
+        <p>Quick daily physical and mental assessment. Kai adapts your session based on how you actually feel.</p>
+      </div>
+      <div class="card">
+        <div class="card-icon" style="background: #F0FDF4;">🌍</div>
+        <h3>Multi-Language</h3>
+        <p>Available in English, French, and Spanish. Your coach speaks your language.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- App Screens -->
+  <section class="screens">
+    <p class="features-title">The App</p>
+    <h2 class="features-heading">4 screens. Everything you need.</h2>
+
+    <!-- Today -->
+    <div class="screen-row">
+      <div class="screen-img">
+        <img src="screen-today.png" alt="Today screen">
+      </div>
+      <div class="screen-text">
+        <div class="screen-badge" style="background: #F0FDF4; color: #16A34A;">Today</div>
+        <h3>Your day starts here.</h3>
+        <p>See your daily briefing, physio metrics from your wearable, today's session with full exercise details, and personalized nutrition — all in one place. Kai adapts everything based on your condition, your recovery, and the weather.</p>
+      </div>
+    </div>
+
+    <!-- Coach -->
+    <div class="screen-row reverse">
+      <div class="screen-img">
+        <img src="screen-coach.png" alt="Coach screen">
+      </div>
+      <div class="screen-text">
+        <div class="screen-badge" style="background: #FFF7ED; color: #F06000;">Coach</div>
+        <h3>Talk to Kai. He gets it.</h3>
+        <p>Ask anything about training, nutrition, recovery, or supplements. Kai gives you straight, science-backed answers. Need to adjust your plan, swap an exercise, or add a session? Just ask — Kai handles it in one message.</p>
+      </div>
+    </div>
+
+    <!-- Plan -->
+    <div class="screen-row">
+      <div class="screen-img">
+        <img src="screen-plan.png" alt="Plan screen">
+      </div>
+      <div class="screen-text">
+        <div class="screen-badge" style="background: #EFF6FF; color: #3B82F6;">Plan</div>
+        <h3>Your program, your rhythm.</h3>
+        <p>View your complete training plan by phase, week, or month. Every session is structured with warm-up, main work, and cooldown. See what's coming, track what's done, and watch your periodization unfold across Build, Peak, and Taper phases.</p>
+      </div>
+    </div>
+
+    <!-- Performance -->
+    <div class="screen-row reverse">
+      <div class="screen-img">
+        <img src="screen-perf.png" alt="Performance screen">
+      </div>
+      <div class="screen-text">
+        <div class="screen-badge" style="background: #F5F3FF; color: #7C3AED;">Performance</div>
+        <h3>Follow the process. See the progress.</h3>
+        <p>Track your consistency, physical condition, and recovery level at a glance. Weekly reports break down your sessions, duration, load, heart rate zones, and tonnage. Daily and monthly reports give you the full picture of your training journey.</p>
+      </div>
+    </div>
+    <!-- Session Detail -->
+    <div class="screen-row">
+      <div class="screen-img">
+        <img src="screen-session.png" alt="Session detail screen">
+      </div>
+      <div class="screen-text">
+        <div class="screen-badge" style="background: #FFF7ED; color: #F06000;">Session</div>
+        <h3>Every exercise, explained.</h3>
+        <p>Open any session to see the full breakdown: warm-up, main work, cooldown. Each exercise comes with sets, reps, RPE, rest times, and coaching cues. Kai even briefs you with a 45-second audio before you start.</p>
+      </div>
+    </div>
+
+    <!-- Session Complete -->
+    <div class="screen-row reverse">
+      <div class="screen-img">
+        <img src="screen-complete.png" alt="Session complete screen">
+      </div>
+      <div class="screen-text">
+        <div class="screen-badge" style="background: #F0FDF4; color: #16A34A;">End of Session</div>
+        <h3>Every rep counts.</h3>
+        <p>When your session is done, see your full stats: duration, strain, calories, heart rate, tonnage, and heart rate zones. Share your results on Instagram or debrief with Kai for a detailed AI analysis.</p>
+      </div>
+    </div>
+
+    <!-- Plan Overview -->
+    <div class="screen-row">
+      <div class="screen-img">
+        <img src="screen-plan-overview.png" alt="Plan overview screen">
+      </div>
+      <div class="screen-text">
+        <div class="screen-badge" style="background: #EFF6FF; color: #3B82F6;">Plan Overview</div>
+        <h3>See the big picture.</h3>
+        <p>Your complete program at a glance: race day countdown, overall progress, phases with Build, Peak, and Taper. Know exactly where you are and what's coming next in your training journey.</p>
+      </div>
+    </div>
+
+    <!-- Sports -->
+    <div class="screen-row reverse">
+      <div class="screen-img">
+        <img src="screen-sports.png" alt="Sport selection screen">
+      </div>
+      <div class="screen-text">
+        <div class="screen-badge" style="background: #F5F3FF; color: #7C3AED;">Onboarding</div>
+        <h3>Start in 2 minutes.</h3>
+        <p>Pick your sport, set your goals, tell Kai your schedule. The onboarding takes less than 2 minutes. Kai builds your entire periodized program while you wait — ready to train immediately.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- Sports -->
+  <section class="sports">
+    <h2>Built for your sport.</h2>
+    <div class="sports-grid">
+      <div class="sport-chip">🏃 Running</div>
+      <div class="sport-chip">⛰️ Trail Running</div>
+      <div class="sport-chip">⚡ Hyrox</div>
+      <div class="sport-chip">🚴 Cycling</div>
+      <div class="sport-chip">💪 Fitness</div>
+      <div class="sport-chip">🏋️ Bodybuilding</div>
+    </div>
+  </section>
+
+  <!-- How it works -->
+  <section class="how" id="how">
+    <h2>Get started in minutes.</h2>
+    <div class="steps">
+      <div class="step">
+        <div class="step-num">1</div>
+        <div>
+          <h3>Pick your sport</h3>
+          <p>Choose your discipline, set your goals, and tell Kai about your schedule and fitness level.</p>
+        </div>
+      </div>
+      <div class="step">
+        <div class="step-num">2</div>
+        <div>
+          <h3>Get your plan</h3>
+          <p>Kai builds a complete periodized program — from week 1 to race day. Every session detailed.</p>
+        </div>
+      </div>
+      <div class="step">
+        <div class="step-num">3</div>
+        <div>
+          <h3>Train with Kai</h3>
+          <p>Follow your sessions, check in daily, chat with Kai for adjustments. Your plan evolves with you.</p>
+        </div>
+      </div>
+      <div class="step">
+        <div class="step-num">4</div>
+        <div>
+          <h3>Track your progress</h3>
+          <p>Weekly reports, performance metrics, consistency tracking. See how far you've come.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Support -->
+  <section class="support" id="support">
+    <h2>Need help?</h2>
+    <p>Our team is here to help. Reach out anytime.</p>
+    <a href="mailto:support@hellochama.com" class="support-email">
+      ✉️ support@hellochama.com
+    </a>
+    <div class="support-links">
+      <a href="https://hmytraffic.github.io/apex-privacy/">Privacy Policy</a>
+      <a href="https://hmytraffic.github.io/apex-privacy/terms.html">Terms & Conditions</a>
+    </div>
+  </section>
+
+  <!-- Footer -->
+  <footer class="footer">
+    © 2026 HSCO (SIREN 879 661 130) — Paris, France
+  </footer>
+
+</body>
+</html>
